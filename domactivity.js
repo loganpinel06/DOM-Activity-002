@@ -31,4 +31,39 @@ document.addEventListener("DOMContentLoaded", function () {
         li.appendChild(img);
         list.appendChild(li);
     });
+
+    //click event
+    list.addEventListener("click", event => {
+        //if the target is not an img, return
+        if (event.target.tagName !== "IMG") {
+            return;
+        }
+        //find the painting that was clicked by its dataset id
+        const painting = paintings.find(p => p.id === event.target.dataset.id);
+        if (!painting) {
+            return;
+        }
+        //show the large painting
+        showPainting(painting);
+    });
+
+    //showPainting function
+    function showPainting(painting) {
+        //clear the figure
+        figure.innerHTML = "";
+
+        const full = document.createElement("img");
+        //set the id to full
+        full.id = "full";
+        //set the src to the large image
+        full.src = `images/large/${painting.id}.jpg`;
+        //set the alt to the title
+        full.alt = painting.title;
+        figure.appendChild(full);
+
+        //set the title
+        titleEl.textContent = painting.title;
+        //set the artist
+        artistEl.textContent = painting.artist;
+    }
 });
