@@ -65,5 +65,36 @@ document.addEventListener("DOMContentLoaded", function () {
         titleEl.textContent = painting.title;
         //set the artist
         artistEl.textContent = painting.artist;
+
+        //loop through the features of each painting
+        painting.features.forEach(feature => {
+            //get the upper left and lower right coordinates of the feature
+            const [left, top] = feature.upperLeft;
+            const [right, bottom] = feature.lowerRight;
+
+            //create the box
+            const box = document.createElement("div");
+            //set the class to box
+            box.className = "box";
+            //set the position to absolute
+            box.style.position = "absolute";
+            //set the position coordinates of the feature box
+            box.style.left = left + "px";
+            box.style.top = top + "px";
+            box.style.width = (right - left) + "px";
+            box.style.height = (bottom - top) + "px";
+
+            //add a mouseover event to the box to show the description
+            box.addEventListener("mouseover", () => {
+                descriptionEl.textContent = feature.description;
+            });
+
+            //add a mouseout event to the box to clear the description
+            box.addEventListener("mouseout", () => {
+                descriptionEl.textContent = "";
+            });
+            //append the box to the figure
+            figure.appendChild(box);
+        });
     }
 });
